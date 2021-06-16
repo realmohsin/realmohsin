@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
-import { CSSTransition } from 'react-transition-group';
-import styled from 'styled-components';
-import { srConfig } from '@config';
-import { KEY_CODES } from '@utils';
-import sr from '@utils/sr';
-import { usePrefersReducedMotion } from '@hooks';
+import React, { useState, useEffect, useRef } from 'react'
+import { useStaticQuery, graphql } from 'gatsby'
+import { CSSTransition } from 'react-transition-group'
+import styled from 'styled-components'
+import { srConfig } from '@config'
+import { KEY_CODES } from '@utils'
+import sr from '@utils/sr'
+import { usePrefersReducedMotion } from '@hooks'
 
 const StyledJobsSection = styled.section`
   max-width: 700px;
@@ -22,7 +22,7 @@ const StyledJobsSection = styled.section`
       min-height: 340px;
     }
   }
-`;
+`
 
 const StyledTabList = styled.div`
   position: relative;
@@ -64,7 +64,7 @@ const StyledTabList = styled.div`
       }
     }
   }
-`;
+`
 
 const StyledTabButton = styled.button`
   ${({ theme }) => theme.mixins.link};
@@ -97,7 +97,7 @@ const StyledTabButton = styled.button`
   &:focus {
     background-color: var(--light-navy);
   }
-`;
+`
 
 const StyledHighlight = styled.div`
   position: absolute;
@@ -108,7 +108,9 @@ const StyledHighlight = styled.div`
   height: var(--tab-height);
   border-radius: var(--border-radius);
   background: var(--green);
-  transform: translateY(calc(${({ activeTabId }) => activeTabId} * var(--tab-height)));
+  transform: translateY(
+    calc(${({ activeTabId }) => activeTabId} * var(--tab-height))
+  );
   transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
   transition-delay: 0.1s;
 
@@ -119,12 +121,14 @@ const StyledHighlight = styled.div`
     max-width: var(--tab-width);
     height: 2px;
     margin-left: 50px;
-    transform: translateX(calc(${({ activeTabId }) => activeTabId} * var(--tab-width)));
+    transform: translateX(
+      calc(${({ activeTabId }) => activeTabId} * var(--tab-width))
+    );
   }
   @media (max-width: 480px) {
     margin-left: 25px;
   }
-`;
+`
 
 const StyledTabPanels = styled.div`
   position: relative;
@@ -134,7 +138,7 @@ const StyledTabPanels = styled.div`
   @media (max-width: 600px) {
     margin-left: 0;
   }
-`;
+`
 
 const StyledTabPanel = styled.div`
   width: 100%;
@@ -162,7 +166,7 @@ const StyledTabPanel = styled.div`
     font-family: var(--font-mono);
     font-size: var(--fz-xs);
   }
-`;
+`
 
 const Jobs = () => {
   const data = useStaticQuery(graphql`
@@ -185,72 +189,76 @@ const Jobs = () => {
         }
       }
     }
-  `);
+  `)
 
-  const jobsData = data.jobs.edges;
+  const jobsData = data.jobs.edges
 
-  const [activeTabId, setActiveTabId] = useState(0);
-  const [tabFocus, setTabFocus] = useState(null);
-  const tabs = useRef([]);
-  const revealContainer = useRef(null);
-  const prefersReducedMotion = usePrefersReducedMotion();
+  const [activeTabId, setActiveTabId] = useState(0)
+  const [tabFocus, setTabFocus] = useState(null)
+  const tabs = useRef([])
+  const revealContainer = useRef(null)
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
     if (prefersReducedMotion) {
-      return;
+      return
     }
 
-    sr.reveal(revealContainer.current, srConfig());
-  }, []);
+    sr.reveal(revealContainer.current, srConfig())
+  }, [])
 
   const focusTab = () => {
     if (tabs.current[tabFocus]) {
-      tabs.current[tabFocus].focus();
-      return;
+      tabs.current[tabFocus].focus()
+      return
     }
     // If we're at the end, go to the start
     if (tabFocus >= tabs.current.length) {
-      setTabFocus(0);
+      setTabFocus(0)
     }
     // If we're at the start, move to the end
     if (tabFocus < 0) {
-      setTabFocus(tabs.current.length - 1);
+      setTabFocus(tabs.current.length - 1)
     }
-  };
+  }
 
   // Only re-run the effect if tabFocus changes
-  useEffect(() => focusTab(), [tabFocus]);
+  useEffect(() => focusTab(), [tabFocus])
 
   // Focus on tabs when using up & down arrow keys
   const onKeyDown = e => {
     switch (e.key) {
       case KEY_CODES.ARROW_UP: {
-        e.preventDefault();
-        setTabFocus(tabFocus - 1);
-        break;
+        e.preventDefault()
+        setTabFocus(tabFocus - 1)
+        break
       }
 
       case KEY_CODES.ARROW_DOWN: {
-        e.preventDefault();
-        setTabFocus(tabFocus + 1);
-        break;
+        e.preventDefault()
+        setTabFocus(tabFocus + 1)
+        break
       }
 
       default: {
-        break;
+        break
       }
     }
-  };
+  }
 
   return (
-    <StyledJobsSection id="jobs" ref={revealContainer}>
-      <h2 className="numbered-heading">Where I’ve Worked</h2>
+    <StyledJobsSection id='jobs' ref={revealContainer}>
+      <h2 className='numbered-heading'>Where I’ve Worked</h2>
 
-      <div className="inner">
-        <StyledTabList role="tablist" aria-label="Job tabs" onKeyDown={e => onKeyDown(e)}>
+      <div className='inner'>
+        <StyledTabList
+          role='tablist'
+          aria-label='Job tabs'
+          onKeyDown={e => onKeyDown(e)}
+        >
           {jobsData &&
             jobsData.map(({ node }, i) => {
-              const { company } = node.frontmatter;
+              const { company } = node.frontmatter
               return (
                 <StyledTabButton
                   key={i}
@@ -258,13 +266,16 @@ const Jobs = () => {
                   onClick={() => setActiveTabId(i)}
                   ref={el => (tabs.current[i] = el)}
                   id={`tab-${i}`}
-                  role="tab"
+                  role='tab'
                   tabIndex={activeTabId === i ? '0' : '-1'}
                   aria-selected={activeTabId === i ? true : false}
-                  aria-controls={`panel-${i}`}>
-                  <span>{company}</span>
+                  aria-controls={`panel-${i}`}
+                >
+                  <span>
+                    {company === 'realmohsin.com' ? 'Freelance' : company}
+                  </span>
                 </StyledTabButton>
-              );
+              )
             })}
           <StyledHighlight activeTabId={activeTabId} />
         </StyledTabList>
@@ -272,39 +283,45 @@ const Jobs = () => {
         <StyledTabPanels>
           {jobsData &&
             jobsData.map(({ node }, i) => {
-              const { frontmatter, html } = node;
-              const { title, url, company, range } = frontmatter;
+              const { frontmatter, html } = node
+              const { title, url, company, range } = frontmatter
 
               return (
-                <CSSTransition key={i} in={activeTabId === i} timeout={250} classNames="fade">
+                <CSSTransition
+                  key={i}
+                  in={activeTabId === i}
+                  timeout={250}
+                  classNames='fade'
+                >
                   <StyledTabPanel
                     id={`panel-${i}`}
-                    role="tabpanel"
+                    role='tabpanel'
                     tabIndex={activeTabId === i ? '0' : '-1'}
                     aria-labelledby={`tab-${i}`}
                     aria-hidden={activeTabId !== i}
-                    hidden={activeTabId !== i}>
+                    hidden={activeTabId !== i}
+                  >
                     <h3>
                       <span>{title}</span>
-                      <span className="company">
+                      <span className='company'>
                         &nbsp;@&nbsp;
-                        <a href={url} className="inline-link">
+                        <a href={url} className='inline-link'>
                           {company}
                         </a>
                       </span>
                     </h3>
 
-                    <p className="range">{range}</p>
+                    <p className='range'>{range}</p>
 
                     <div dangerouslySetInnerHTML={{ __html: html }} />
                   </StyledTabPanel>
                 </CSSTransition>
-              );
+              )
             })}
         </StyledTabPanels>
       </div>
     </StyledJobsSection>
-  );
-};
+  )
+}
 
-export default Jobs;
+export default Jobs

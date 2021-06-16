@@ -126,11 +126,11 @@ const About = () => {
   }, [])
 
   const skills = [
-    'JavaScript (ES6+)',
+    'JavaScript',
     'React',
-    'Eleventy',
-    'Vue',
     'Node.js',
+    'JAMStack',
+    'Vue',
     'WordPress'
   ]
 
@@ -151,9 +151,9 @@ const About = () => {
               In a world where websites are now ranked by search engines based
               on their speed, and where applications are judged by performance,
               I put a premium on making sure my software products are highly
-              optimized. &nbsp;And I expect my clients to know exactly the
-              quality and value they are getting, and thus demo versions of some
-              my past work is made available for clients to view.
+              optimized. &nbsp;And I expect my clients to know exactly what they
+              are getting, so past work is not only alluded to, but also
+              available for viewing and testing as demos.
             </p>
 
             <p>

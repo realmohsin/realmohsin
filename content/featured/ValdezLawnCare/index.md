@@ -1,16 +1,14 @@
 ---
 date: '1'
 title: 'Lawn Care Business'
-cover: './valdez-lawn-care.png'
-github: 'https://github.com'
-external: 'https://realmohsin.com'
+cover: './valdez-lawn-care-1280.png'
+github: 'https://github.com/realmohsin'
+external: 'https://realmohsin-demo-3.xyz/'
 tech:
-  - VS Code
-  - Sublime Text
-  - Atom
-  - iTerm2
-  - Hyper
+  - Wordpress
+  - Flywheel
+  - Local
 showInProjects: true
 ---
 
-A minimal, dark blue theme for VS Code, Sublime Text, Atom, iTerm, and more. Available on [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=brittanychiang.halcyon-vscode), [Package Control](https://packagecontrol.io/packages/Halcyon%20Theme), [Atom Package Manager](https://atom.io/themes/halcyon-syntax), and [npm](https://www.npmjs.com/package/hyper-halcyon-theme).
+A Wordpress website for a local lawn care business. A tried and true technology, Wordpress, when chosen with the correct peripherals, serves the needs of many small businesses looking to create their online presence. 

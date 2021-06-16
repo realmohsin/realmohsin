@@ -1,9 +1,9 @@
 ---
 date: '3'
 title: 'Interior Design Company'
-cover: './schimerli.png'
-github: 'https://github.com/'
-external: 'https://realmohsin.com'
+cover: './schimerli-1280.png'
+github: 'https://github.com/realmohsin/featured-website-1'
+external: 'https://realmohsin-demo-2.xyz/'
 tech:
   - Gatsby.js
   - Firebase

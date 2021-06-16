@@ -1,15 +1,16 @@
 ---
 date: '2'
 title: 'Elite Law Firm'
-cover: './romano-law.png'
-github: 'https://github.com'
-external: 'https://realmohsin.com'
+cover: './romano-law-size.jpg'
+github: 'https://github.com/realmohsin/featured-website-2'
+external: 'https://realmohsin-demo-1.xyz/'
 tech:
   - React
   - Node.js
-  - Express
-  - Spotify Web API
+  - Contentful CMS
+  - JAMStack
 showInProjects: true
 ---
 
-A web app for visualizing personalized Spotify data. View your top artists, top tracks, recently played tracks, and detailed audio information about each track. Create and save new playlists of recommended tracks based on your existing playlists and more.
+The main front facing online presence of an elite law firm. The design of the website features an innovative navigation system. The backend is serverless - a new architecture that enables extremely fast page loading speed.
+
