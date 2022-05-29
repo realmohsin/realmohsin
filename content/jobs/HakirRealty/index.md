@@ -1,12 +1,12 @@
 ---
 date: '2013-02-21'
-title: 'Real Estate Consultant'
+title: 'Web Administrator'
 company: 'Hakir Realty'
 location: 'New York City, NY'
 range: 'February 2013 - June 2015'
 url: 'https://hakir-realty.com'
 ---
 
-- Facilitated negotiations for the buying, financing and rebuilding of real estate projects.
-- Managed the logistics and profitability concerns of refurbished real estate assets.
+- Developed and maintained the main website and related web applications for a real estate brokerage company.
+
 

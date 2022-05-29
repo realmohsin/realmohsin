@@ -1,6 +1,6 @@
 ---
 date: '2011-07-21'
-title: 'Mathematics Tutor'
+title: 'Mathematics Instructor'
 company: "Khan's Tutorial"
 location: 'New York City, NY'
 range: 'July 2011 - December 2012'

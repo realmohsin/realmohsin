@@ -149,7 +149,7 @@ const About = () => {
 
             <p>
               In a world where websites are now ranked by search engines based
-              on their speed, and where applications are judged by performance,
+              on their speed, and where applications are judged by their performance,
               I put a premium on making sure my software products are highly
               optimized. &nbsp;And I expect my clients to know exactly what they
               are getting, so past work is not only alluded to, but also
