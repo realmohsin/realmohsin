@@ -1,8 +1,8 @@
-import { createGlobalStyle } from 'styled-components'
-import fonts from './fonts'
-import variables from './variables'
-import TransitionStyles from './TransitionStyles'
-import PrismStyles from './PrismStyles'
+import { createGlobalStyle } from "styled-components";
+import fonts from "./fonts";
+import PrismStyles from "./PrismStyles";
+import TransitionStyles from "./TransitionStyles";
+import variables from "./variables";
 
 const GlobalStyle = createGlobalStyle`
   ${fonts};
@@ -364,6 +364,7 @@ const GlobalStyle = createGlobalStyle`
 
   #logo {
     color: var(--green);
+    font-family: 'Calibre';
   }
 
   .overline {
@@ -427,6 +428,6 @@ const GlobalStyle = createGlobalStyle`
   .project-image a {
     border-radius: 6px !important;
   }
-`
+`;
 
-export default GlobalStyle
+export default GlobalStyle;

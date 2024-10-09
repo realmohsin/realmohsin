@@ -1,6 +1,6 @@
 ---
 date: '2019-11-01'
-title: 'Company Meetings Dashboard'
+title: 'Healthcare'
 github: 'https://github.com/realmohsin/company-meetings'
 external: 'https://github.com/realmohsin/company-meetings'
 tech:
@@ -8,6 +8,7 @@ tech:
   - Heroku
   - Webpack
 showInProjects: true
+cover: './healthcare.png'
 ---
 
-Internal company organizational application. Dashboard for scheduling company meetings across many departments and divisions.
+We have helped private practices improve their online visibility and reach more patients through our SEO practices.

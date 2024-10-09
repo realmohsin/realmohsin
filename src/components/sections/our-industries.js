@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Link, useStaticQuery, graphql } from 'gatsby'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import styled from 'styled-components'
-import { srConfig } from '@config'
-import sr from '@utils/sr'
-import { Icon } from '@components/icons'
-import { usePrefersReducedMotion } from '@hooks'
+import { srConfig } from "@config";
+import { usePrefersReducedMotion } from "@hooks";
+import sr from "@utils/sr";
+import { graphql, useStaticQuery } from "gatsby";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import React, { useEffect, useRef, useState } from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import styled from "styled-components";
 
 const StyledProjectsSection = styled.section`
   display: flex;
@@ -41,7 +41,7 @@ const StyledProjectsSection = styled.section`
     ${({ theme }) => theme.mixins.button};
     margin: 80px auto 0;
   }
-`
+`;
 
 const StyledProject = styled.li`
   position: relative;
@@ -75,8 +75,21 @@ const StyledProject = styled.li`
     transition: var(--transition);
   }
 
+  .top-box {
+    height: 130px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .icon-wrapper {
+    /* width: 120px; */
+    height: 100%;
+  }
+
   .project-top {
     ${({ theme }) => theme.mixins.flexBetween};
+    justify-content: center;
     margin-bottom: 35px;
 
     .folder {
@@ -117,12 +130,13 @@ const StyledProject = styled.li`
     margin: 0 0 10px;
     color: var(--lightest-slate);
     font-size: var(--fz-xxl);
+    text-align: center;
 
     a {
       position: static;
 
       &:before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         z-index: 0;
@@ -162,9 +176,9 @@ const StyledProject = styled.li`
       }
     }
   }
-`
+`;
 
-const Projects = () => {
+const OurIndustries = () => {
   const data = useStaticQuery(graphql`
     query {
       projects: allMarkdownRemark(
@@ -181,92 +195,113 @@ const Projects = () => {
               tech
               github
               external
+              cover {
+                childImageSharp {
+                  gatsbyImageData(
+                    width: 100
+                    placeholder: BLURRED
+                    formats: [AUTO, WEBP, AVIF]
+                  )
+                }
+              }
             }
             html
           }
         }
       }
     }
-  `)
+  `);
 
-  const [showMore, setShowMore] = useState(false)
-  const revealTitle = useRef(null)
-  const revealArchiveLink = useRef(null)
-  const revealProjects = useRef([])
-  const prefersReducedMotion = usePrefersReducedMotion()
+  const [showMore, setShowMore] = useState(false);
+  const revealTitle = useRef(null);
+  const revealArchiveLink = useRef(null);
+  const revealProjects = useRef([]);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (prefersReducedMotion) {
-      return
+      return;
     }
 
-    sr.reveal(revealTitle.current, srConfig())
-    sr.reveal(revealArchiveLink.current, srConfig())
+    sr.reveal(revealTitle.current, srConfig());
+    sr.reveal(revealArchiveLink.current, srConfig());
     revealProjects.current.forEach((ref, i) =>
       sr.reveal(ref, srConfig(i * 100))
-    )
-  }, [])
+    );
+  }, []);
 
-  const GRID_LIMIT = 6
-  const projects = data.projects.edges.filter(({ node }) => node)
-  const firstSix = projects.slice(0, GRID_LIMIT)
-  const projectsToShow = showMore ? projects : firstSix
+  const GRID_LIMIT = 6;
+  const projects = data.projects.edges.filter(({ node }) => node);
+  const firstSix = projects.slice(0, GRID_LIMIT);
+  const projectsToShow = showMore ? projects : firstSix;
 
-  const projectInner = node => {
-    const { frontmatter, html } = node
-    const { github, external, title, tech } = frontmatter
+  const projectInner = (node) => {
+    const { frontmatter, html } = node;
+    const { github, external, title, tech, cover } = frontmatter;
+    const image = getImage(cover);
 
     return (
-      <div className='project-inner'>
+      <div className="project-inner">
         <header>
-          <div className='project-top'>
-            <div className='folder'>
-              <Icon name='Folder' />
+          <div className="project-top">
+            <div className="folder">
+              {/* <Icon name="Folder" /> */}
+              <div className="top-box">
+                <div className="icon-wrapper">
+                  <GatsbyImage
+                    image={image}
+                    alt={"What We Do"}
+                    className="img"
+                  />
+                </div>
+              </div>
             </div>
-            <div className='project-links'>
+            {/* <div className="project-links">
               {github && (
-                <a href={github} aria-label='GitHub Link'>
-                  <Icon name='GitHub' />
+                <a href={github} aria-label="GitHub Link">
+                  <Icon name="GitHub" />
                 </a>
               )}
               {external && (
                 <a
                   href={external}
-                  aria-label='External Link'
-                  className='external'
+                  aria-label="External Link"
+                  className="external"
                 >
-                  <Icon name='External' />
+                  <Icon name="External" />
                 </a>
               )}
-            </div>
+            </div> */}
           </div>
 
-          <h3 className='project-title'>
-            <a href={external}>{title}</a>
+          <h3 className="project-title">
+            <a>{title}</a>
           </h3>
 
           <div
-            className='project-description'
+            className="project-description"
             dangerouslySetInnerHTML={{ __html: html }}
           />
         </header>
 
-        <footer>
+        {/* <footer>
           {tech && (
-            <ul className='project-tech-list'>
+            <ul className="project-tech-list">
               {tech.map((tech, i) => (
                 <li key={i}>{tech}</li>
               ))}
             </ul>
           )}
-        </footer>
+        </footer> */}
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <StyledProjectsSection>
-      <h2 ref={revealTitle}>Some Technical Projects</h2>
+      <h2 className="numbered-heading" ref={revealTitle}>
+        Our Industries
+      </h2>
 
       {/* <Link
         className='inline-link archive-link'
@@ -276,7 +311,7 @@ const Projects = () => {
         view the archive
       </Link> */}
 
-      <ul className='projects-grid'>
+      <ul className="projects-grid">
         {prefersReducedMotion ? (
           <>
             {projectsToShow &&
@@ -290,17 +325,17 @@ const Projects = () => {
               projectsToShow.map(({ node }, i) => (
                 <CSSTransition
                   key={i}
-                  classNames='fadeup'
+                  classNames="fadeup"
                   timeout={i >= GRID_LIMIT ? (i - GRID_LIMIT) * 300 : 300}
                   exit={false}
                 >
                   <StyledProject
                     key={i}
-                    ref={el => (revealProjects.current[i] = el)}
+                    ref={(el) => (revealProjects.current[i] = el)}
                     style={{
                       transitionDelay: `${
                         i >= GRID_LIMIT ? (i - GRID_LIMIT) * 100 : 0
-                      }ms`
+                      }ms`,
                     }}
                   >
                     {projectInner(node)}
@@ -311,11 +346,11 @@ const Projects = () => {
         )}
       </ul>
 
-      <button className='more-button' onClick={() => setShowMore(!showMore)}>
-        Show {showMore ? 'Less' : 'More'}
-      </button>
+      {/* <button className="more-button" onClick={() => setShowMore(!showMore)}>
+        Show {showMore ? "Less" : "More"}
+      </button> */}
     </StyledProjectsSection>
-  )
-}
+  );
+};
 
-export default Projects
+export default OurIndustries;

@@ -1,6 +1,6 @@
 ---
 date: '2020-08-01'
-title: 'WildLeaf Tours'
+title: 'Hospitality'
 github: 'https://github.com/realmohsin/wildleaf-api'
 external: 'https://github.com/realmohsin/wildleaf-api'
 tech:
@@ -8,6 +8,7 @@ tech:
   - MongoDB
   - Mongoose
 showInProjects: true
+cover: './hospitality.png'
 ---
 
-Application for handling the creation and scheduling of all WildLeaf Tours. Geospatial data is used to view remaining path while on a tour.
+We have created websites and digital marketing campaigns for hotels across the globe, helping the hospitality sector better reach their clients.

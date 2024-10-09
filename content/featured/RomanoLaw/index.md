@@ -12,5 +12,5 @@ tech:
 showInProjects: true
 ---
 
-The main front facing online presence of an elite law firm. The design of the website features an innovative navigation system. The backend is serverless - a new architecture that enables extremely fast page loading speed.
+We created the entire online presence for an elite law firm. The innovative website features a navigation system that draws the user to contact the firm. The backend is serverless - a new architecture that enables extremely fast page loading speed.
 

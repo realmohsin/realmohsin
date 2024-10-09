@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
-import { CSSTransition } from 'react-transition-group'
-import styled from 'styled-components'
-import { srConfig } from '@config'
-import { KEY_CODES } from '@utils'
-import sr from '@utils/sr'
-import { usePrefersReducedMotion } from '@hooks'
+import { srConfig } from "@config";
+import { usePrefersReducedMotion } from "@hooks";
+import { KEY_CODES } from "@utils";
+import sr from "@utils/sr";
+import { graphql, useStaticQuery } from "gatsby";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import React, { useEffect, useRef, useState } from "react";
+import { CSSTransition } from "react-transition-group";
+import styled from "styled-components";
 
 const StyledJobsSection = styled.section`
   max-width: 700px;
@@ -22,7 +23,7 @@ const StyledJobsSection = styled.section`
       min-height: 340px;
     }
   }
-`
+`;
 
 const StyledTabList = styled.div`
   position: relative;
@@ -31,6 +32,10 @@ const StyledTabList = styled.div`
   padding: 0;
   margin: 0;
   list-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
 
   @media (max-width: 600px) {
     display: flex;
@@ -64,18 +69,19 @@ const StyledTabList = styled.div`
       }
     }
   }
-`
+`;
 
 const StyledTabButton = styled.button`
   ${({ theme }) => theme.mixins.link};
   display: flex;
   align-items: center;
-  width: 100%;
+  /* width: 100%; */
+  /* width: max-content; */
   height: var(--tab-height);
   padding: 0 20px 2px;
   border-left: 2px solid var(--lightest-navy);
   background-color: transparent;
-  color: ${({ isActive }) => (isActive ? 'var(--green)' : 'var(--slate)')};
+  color: ${({ isActive }) => (isActive ? "var(--green)" : "var(--slate)")};
   font-family: var(--font-mono);
   font-size: var(--fz-xs);
   text-align: left;
@@ -87,7 +93,7 @@ const StyledTabButton = styled.button`
   @media (max-width: 600px) {
     ${({ theme }) => theme.mixins.flexCenter};
     min-width: 120px;
-    padding: 0 15px;
+    padding: 0 110px;
     border-left: 0;
     border-bottom: 2px solid var(--lightest-navy);
     text-align: center;
@@ -97,7 +103,7 @@ const StyledTabButton = styled.button`
   &:focus {
     background-color: var(--light-navy);
   }
-`
+`;
 
 const StyledHighlight = styled.div`
   position: absolute;
@@ -128,7 +134,7 @@ const StyledHighlight = styled.div`
   @media (max-width: 480px) {
     margin-left: 25px;
   }
-`
+`;
 
 const StyledTabPanels = styled.div`
   position: relative;
@@ -138,7 +144,7 @@ const StyledTabPanels = styled.div`
   @media (max-width: 600px) {
     margin-left: 0;
   }
-`
+`;
 
 const StyledTabPanel = styled.div`
   width: 100%;
@@ -154,10 +160,20 @@ const StyledTabPanel = styled.div`
     font-size: var(--fz-xxl);
     font-weight: 500;
     line-height: 1.3;
+    color: var(--green);
+    text-align: center;
+  }
 
-    .company {
-      color: var(--green);
-    }
+  .top-box {
+    height: 130px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .icon-wrapper {
+    /* width: 120px; */
+    height: 100%;
   }
 
   .range {
@@ -166,9 +182,15 @@ const StyledTabPanel = styled.div`
     font-family: var(--font-mono);
     font-size: var(--fz-xs);
   }
-`
 
-const Jobs = () => {
+  .wrapper {
+    display: block;
+    position: relative;
+    width: 100%;
+  }
+`;
+
+const WhatWeDo = () => {
   const data = useStaticQuery(graphql`
     query {
       jobs: allMarkdownRemark(
@@ -183,99 +205,108 @@ const Jobs = () => {
               location
               range
               url
+              cover {
+                childImageSharp {
+                  gatsbyImageData(
+                    width: 100
+                    placeholder: BLURRED
+                    formats: [AUTO, WEBP, AVIF]
+                  )
+                }
+              }
             }
             html
           }
         }
       }
     }
-  `)
+  `);
 
-  const jobsData = data.jobs.edges
+  const jobsData = data.jobs.edges;
 
-  const [activeTabId, setActiveTabId] = useState(0)
-  const [tabFocus, setTabFocus] = useState(null)
-  const tabs = useRef([])
-  const revealContainer = useRef(null)
-  const prefersReducedMotion = usePrefersReducedMotion()
+  const [activeTabId, setActiveTabId] = useState(0);
+  const [tabFocus, setTabFocus] = useState(null);
+  const tabs = useRef([]);
+  const revealContainer = useRef(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (prefersReducedMotion) {
-      return
+      return;
     }
 
-    sr.reveal(revealContainer.current, srConfig())
-  }, [])
+    sr.reveal(revealContainer.current, srConfig());
+  }, []);
 
   const focusTab = () => {
     if (tabs.current[tabFocus]) {
-      tabs.current[tabFocus].focus()
-      return
+      tabs.current[tabFocus].focus();
+      return;
     }
     // If we're at the end, go to the start
     if (tabFocus >= tabs.current.length) {
-      setTabFocus(0)
+      setTabFocus(0);
     }
     // If we're at the start, move to the end
     if (tabFocus < 0) {
-      setTabFocus(tabs.current.length - 1)
+      setTabFocus(tabs.current.length - 1);
     }
-  }
+  };
 
   // Only re-run the effect if tabFocus changes
-  useEffect(() => focusTab(), [tabFocus])
+  useEffect(() => focusTab(), [tabFocus]);
 
   // Focus on tabs when using up & down arrow keys
-  const onKeyDown = e => {
+  const onKeyDown = (e) => {
     switch (e.key) {
       case KEY_CODES.ARROW_UP: {
-        e.preventDefault()
-        setTabFocus(tabFocus - 1)
-        break
+        e.preventDefault();
+        setTabFocus(tabFocus - 1);
+        break;
       }
 
       case KEY_CODES.ARROW_DOWN: {
-        e.preventDefault()
-        setTabFocus(tabFocus + 1)
-        break
+        e.preventDefault();
+        setTabFocus(tabFocus + 1);
+        break;
       }
 
       default: {
-        break
+        break;
       }
     }
-  }
+  };
 
   return (
-    <StyledJobsSection id='jobs' ref={revealContainer}>
-      <h2 className='numbered-heading'>Where I’ve Worked</h2>
+    <StyledJobsSection id="what-we-do" ref={revealContainer}>
+      <h2 className="numbered-heading">What We Do</h2>
 
-      <div className='inner'>
+      <div className="inner">
         <StyledTabList
-          role='tablist'
-          aria-label='Job tabs'
-          onKeyDown={e => onKeyDown(e)}
+          role="tablist"
+          aria-label="Job tabs"
+          onKeyDown={(e) => onKeyDown(e)}
         >
           {jobsData &&
             jobsData.map(({ node }, i) => {
-              const { company } = node.frontmatter
+              const { company } = node.frontmatter;
               return (
                 <StyledTabButton
                   key={i}
                   isActive={activeTabId === i}
                   onClick={() => setActiveTabId(i)}
-                  ref={el => (tabs.current[i] = el)}
+                  ref={(el) => (tabs.current[i] = el)}
                   id={`tab-${i}`}
-                  role='tab'
-                  tabIndex={activeTabId === i ? '0' : '-1'}
+                  role="tab"
+                  tabIndex={activeTabId === i ? "0" : "-1"}
                   aria-selected={activeTabId === i ? true : false}
                   aria-controls={`panel-${i}`}
                 >
                   <span>
-                    {company === 'realmohsin.com' ? 'Freelance' : company}
+                    {company === "realmohsin.com" ? "Freelance" : company}
                   </span>
                 </StyledTabButton>
-              )
+              );
             })}
           <StyledHighlight activeTabId={activeTabId} />
         </StyledTabList>
@@ -283,45 +314,48 @@ const Jobs = () => {
         <StyledTabPanels>
           {jobsData &&
             jobsData.map(({ node }, i) => {
-              const { frontmatter, html } = node
-              const { title, url, company, range } = frontmatter
+              const { frontmatter, html } = node;
+              const { title, url, company, range, cover } = frontmatter;
+              const image = getImage(cover);
 
               return (
                 <CSSTransition
                   key={i}
                   in={activeTabId === i}
                   timeout={250}
-                  classNames='fade'
+                  classNames="fade"
                 >
                   <StyledTabPanel
                     id={`panel-${i}`}
-                    role='tabpanel'
-                    tabIndex={activeTabId === i ? '0' : '-1'}
+                    role="tabpanel"
+                    tabIndex={activeTabId === i ? "0" : "-1"}
                     aria-labelledby={`tab-${i}`}
                     aria-hidden={activeTabId !== i}
                     hidden={activeTabId !== i}
                   >
-                    <h3>
-                      <span>{title}</span>
-                      <span className='company'>
-                        &nbsp;@&nbsp;
-                        <a href={url} className='inline-link'>
-                          {company}
-                        </a>
-                      </span>
-                    </h3>
+                    <div className="top-box">
+                      <div className="icon-wrapper">
+                        <GatsbyImage
+                          image={image}
+                          alt={"What We Do"}
+                          className="img"
+                        />
+                      </div>
+                    </div>
 
-                    <p className='range'>{range}</p>
+                    <h3 className="company">{company}</h3>
+
+                    {/* <p className="range">{range}</p> */}
 
                     <div dangerouslySetInnerHTML={{ __html: html }} />
                   </StyledTabPanel>
                 </CSSTransition>
-              )
+              );
             })}
         </StyledTabPanels>
       </div>
     </StyledJobsSection>
-  )
-}
+  );
+};
 
-export default Jobs
+export default WhatWeDo;

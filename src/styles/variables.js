@@ -1,4 +1,4 @@
-import { css } from 'styled-components'
+import { css } from "styled-components";
 
 const variables = css`
   :root {
@@ -15,9 +15,9 @@ const variables = css`
     --green: #64ffda;
     --green-tint: rgba(100, 255, 218, 0.1);
 
-    --font-sans: 'Calibre', 'San Francisco', 'SF Pro Text', -apple-system,
+    --font-sans: "Calibre", "San Francisco", "SF Pro Text", -apple-system,
       system-ui, sans-serif;
-    --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+    --font-mono: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
 
     --fz-xxs: 12px;
     --fz-xs: 13px;
@@ -33,7 +33,7 @@ const variables = css`
     --nav-scroll-height: 70px;
 
     --tab-height: 42px;
-    --tab-width: 120px;
+    --tab-width: 220px;
 
     --easing: cubic-bezier(0.645, 0.045, 0.355, 1);
     --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -47,6 +47,6 @@ const variables = css`
     --ham-after-active: bottom 0.1s ease-out,
       transform 0.22s cubic-bezier(0.215, 0.61, 0.355, 1) 0.12s;
   }
-`
+`;
 
-export default variables
+export default variables;

@@ -11,4 +11,4 @@ tech:
 showInProjects: true
 ---
 
-A Wordpress website for a local lawn care business. A tried and true technology, Wordpress, when chosen with the correct peripherals, serves the needs of many small businesses looking to create their online presence. 
+We helped this small, family business reach clients through an online presence consisting of an attractive website and effective digital marketing across social media platforms. Our SEO campaigns boosted the visibility of the company website multiple folds.

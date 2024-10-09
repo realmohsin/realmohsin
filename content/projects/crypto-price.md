@@ -1,6 +1,6 @@
 ---
 date: '2019-09-12'
-title: 'CryptoPrice'
+title: 'Agriculture'
 github: 'https://github.com/realmohsin/crypto-dashboard'
 external: 'https://github.com/realmohsin/crypto-dashboard'
 tech:
@@ -9,6 +9,7 @@ tech:
   - React
   - SASS
 showInProjects: true
+cover: './agriculture.png'
 ---
 
-Data visualization for comparing cryptocurrency prices. Features include visualization of data in a graphical format, filtering through thousands of coins, and an intuitive user interface. 
+Data visualization for agricultural enterprises is key for effective business, and we have helped in this crucial area.

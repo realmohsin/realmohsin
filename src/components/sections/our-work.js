@@ -1,11 +1,10 @@
-import React, { useEffect, useRef } from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
-import { GatsbyImage, getImage } from 'gatsby-plugin-image'
-import styled from 'styled-components'
-import sr from '@utils/sr'
-import { srConfig } from '@config'
-import { Icon } from '@components/icons'
-import { usePrefersReducedMotion } from '@hooks'
+import { srConfig } from "@config";
+import { usePrefersReducedMotion } from "@hooks";
+import sr from "@utils/sr";
+import { graphql, useStaticQuery } from "gatsby";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import React, { useEffect, useRef } from "react";
+import styled from "styled-components";
 
 const StyledProjectsGrid = styled.ul`
   ${({ theme }) => theme.mixins.resetList};
@@ -14,7 +13,7 @@ const StyledProjectsGrid = styled.ul`
     position: relative;
     z-index: 1;
   }
-`
+`;
 
 const StyledProject = styled.li`
   position: relative;
@@ -138,7 +137,7 @@ const StyledProject = styled.li`
         position: static;
 
         &:before {
-          content: '';
+          content: "";
           display: block;
           position: absolute;
           z-index: 0;
@@ -263,7 +262,7 @@ const StyledProject = styled.li`
       }
 
       &:before {
-        content: '';
+        content: "";
         position: absolute;
         width: 100%;
         height: 100%;
@@ -291,9 +290,9 @@ const StyledProject = styled.li`
       }
     }
   }
-`
+`;
 
-const Featured = () => {
+const OurWork = () => {
   const data = useStaticQuery(graphql`
     {
       featured: allMarkdownRemark(
@@ -322,93 +321,93 @@ const Featured = () => {
         }
       }
     }
-  `)
+  `);
 
-  const featuredProjects = data.featured.edges.filter(({ node }) => node)
-  const revealTitle = useRef(null)
-  const revealProjects = useRef([])
-  const prefersReducedMotion = usePrefersReducedMotion()
+  const featuredProjects = data.featured.edges.filter(({ node }) => node);
+  const revealTitle = useRef(null);
+  const revealProjects = useRef([]);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (prefersReducedMotion) {
-      return
+      return;
     }
 
-    sr.reveal(revealTitle.current, srConfig())
+    sr.reveal(revealTitle.current, srConfig());
     revealProjects.current.forEach((ref, i) =>
       sr.reveal(ref, srConfig(i * 100))
-    )
-  }, [])
+    );
+  }, []);
 
   return (
-    <section id='projects'>
-      <h2 className='numbered-heading' ref={revealTitle}>
-        Some Websites I've Built
+    <section id="our-work">
+      <h2 className="numbered-heading" ref={revealTitle}>
+        Our Work
       </h2>
 
       <StyledProjectsGrid>
         {featuredProjects &&
           featuredProjects.map(({ node }, i) => {
-            const { frontmatter, html } = node
-            const { external, title, tech, github, cover } = frontmatter
-            const image = getImage(cover)
+            const { frontmatter, html } = node;
+            const { external, title, tech, github, cover } = frontmatter;
+            const image = getImage(cover);
 
             return (
               <StyledProject
                 key={i}
-                ref={el => (revealProjects.current[i] = el)}
+                ref={(el) => (revealProjects.current[i] = el)}
               >
-                <div className='project-content'>
+                <div className="project-content">
                   <div>
-                    <p className='project-overline'>Featured Project</p>
+                    <p className="project-overline">Featured Case Study</p>
 
-                    <h3 className='project-title'>
-                      <a href={external}>{title}</a>
+                    <h3 className="project-title">
+                      <a>{title}</a>
                     </h3>
 
                     <div
-                      className='project-description'
+                      className="project-description"
                       dangerouslySetInnerHTML={{ __html: html }}
                     />
 
                     {tech.length && (
-                      <ul className='project-tech-list'>
+                      <ul className="project-tech-list">
                         {tech.map((tech, i) => (
                           <li key={i}>{tech}</li>
                         ))}
                       </ul>
                     )}
 
-                    <div className='project-links'>
+                    {/* <div className="project-links">
                       {github && (
-                        <a href={github} aria-label='GitHub Link'>
-                          <Icon name='GitHub' />
+                        <a href={github} aria-label="GitHub Link">
+                          <Icon name="GitHub" />
                         </a>
                       )}
                       {external && (
                         <a
                           href={external}
-                          aria-label='External Link'
-                          className='external'
+                          aria-label="External Link"
+                          className="external"
                         >
-                          <Icon name='External' />
+                          <Icon name="External" />
                         </a>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
-                <div className='project-image'>
-                  <a href={external ? external : github ? github : '#'}>
-                    <GatsbyImage image={image} alt={title} className='img' />
+                <div className="project-image">
+                  <a>
+                    <GatsbyImage image={image} alt={title} className="img" />
                   </a>
                 </div>
               </StyledProject>
-            )
+            );
           })}
       </StyledProjectsGrid>
     </section>
-  )
-}
+  );
+};
 
-export default Featured
+export default OurWork;

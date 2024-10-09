@@ -11,5 +11,5 @@ tech:
 showInProjects: true
 ---
 
-A highly visual website for an interior design company that begins with an elegant animation. The technologies chosen were based on the resource-heavy requirements of the project.
+Both the software and websites were done by us for this interior design company. The website features an elegant, user-friendly design. The technologies for the backend were  chosen based on the resource-heavy requirements of the project.
 

@@ -1,13 +1,13 @@
-const config = require('./src/config')
+const config = require("./src/config");
 
 module.exports = {
   siteMetadata: {
-    title: 'Real Mohsin',
+    title: "Mohsin Consulting",
     description:
-      'Real Mohsin is a software engineer who specializes in building (and occasionally designing) exceptional digital experiences.',
-    siteUrl: 'https://realmohsin.com', // No trailing slash allowed!
-    image: '/og.jpg', // Path to your image you placed in the 'static' folder
-    twitterUsername: '@1realmohsin'
+      "Mohsin Consulting is a New York based software development company focusing on website design, custom software, mobile app development and digital marketing.",
+    siteUrl: "https://mohsinconsulting.com", // No trailing slash allowed!
+    image: "/og.png", // Path to your image you placed in the 'static' folder
+    twitterUsername: "@LlcMohsin12633",
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -20,36 +20,36 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: 'Real Mohsin',
-        short_name: 'Real Mohsin',
-        start_url: '/',
+        name: "Mohsin Consulting",
+        short_name: "Mohsin Consulting",
+        start_url: "/",
         background_color: config.colors.darkNavy,
         theme_color: config.colors.navy,
-        display: 'minimal-ui',
-        icon: 'src/images/logo.png'
-      }
+        display: "minimal-ui",
+        icon: "src/images/logo.png",
+      },
     },
     `gatsby-plugin-offline`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`
-      }
+        path: `${__dirname}/src/images`,
+      },
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: 'content',
-        path: `${__dirname}/content/`
-      }
+        name: "content",
+        path: `${__dirname}/content/`,
+      },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `projects`,
-        path: `${__dirname}/content/projects`
-      }
+        path: `${__dirname}/content/projects`,
+      },
     },
     {
       resolve: `gatsby-transformer-remark`,
@@ -57,25 +57,25 @@ module.exports = {
         plugins: [
           {
             // https://www.gatsbyjs.org/packages/gatsby-remark-external-links
-            resolve: 'gatsby-remark-external-links',
+            resolve: "gatsby-remark-external-links",
             options: {
-              target: '_blank',
-              rel: 'nofollow noopener noreferrer'
-            }
+              target: "_blank",
+              rel: "nofollow noopener noreferrer",
+            },
           },
           {
             // https://www.gatsbyjs.org/packages/gatsby-remark-images
-            resolve: 'gatsby-remark-images',
+            resolve: "gatsby-remark-images",
             options: {
               maxWidth: 700,
               linkImagesToOriginal: true,
               quality: 90,
-              tracedSVG: { color: config.colors.green }
-            }
+              tracedSVG: { color: config.colors.green },
+            },
           },
           {
             // https://www.gatsbyjs.org/packages/gatsby-remark-code-titles/
-            resolve: 'gatsby-remark-code-titles'
+            resolve: "gatsby-remark-code-titles",
           }, // IMPORTANT: this must be ahead of other plugins that use code blocks
           {
             // https://www.gatsbyjs.org/packages/gatsby-remark-prismjs
@@ -88,7 +88,7 @@ module.exports = {
               // you may use this to prevent Prism from re-processing syntax.
               // This is an uncommon use-case though;
               // If you're unsure, it's best to use the default value.
-              classPrefix: 'language-',
+              classPrefix: "language-",
               // This is used to allow setting a language for inline code
               // (i.e. single backticks) by creating a separator.
               // This separator is a string and will do no white-space
@@ -118,35 +118,35 @@ module.exports = {
               // existing language" below.
               languageExtensions: [
                 {
-                  language: 'superscript',
-                  extend: 'javascript',
+                  language: "superscript",
+                  extend: "javascript",
                   definition: {
-                    superscript_types: /(SuperType)/
+                    superscript_types: /(SuperType)/,
                   },
                   insertBefore: {
                     function: {
-                      superscript_keywords: /(superif|superelse)/
-                    }
-                  }
-                }
+                      superscript_keywords: /(superif|superelse)/,
+                    },
+                  },
+                },
               ],
               // Customize the prompt used in shell output
               // Values below are default
               prompt: {
-                user: 'root',
-                host: 'localhost',
-                global: false
-              }
-            }
-          }
-        ]
-      }
-    }
+                user: "root",
+                host: "localhost",
+                global: false,
+              },
+            },
+          },
+        ],
+      },
+    },
     // {
     //   resolve: `gatsby-plugin-google-analytics`,
     //   options: {
     //     trackingId: 'UA-45666519-2',
     //   },
     // },
-  ]
-}
+  ],
+};

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "gatsby";
-import PropTypes from "prop-types";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import styled, { css } from "styled-components";
-import { navLinks } from "@config";
-import { loaderDelay } from "@utils";
-import { useScrollDirection, usePrefersReducedMotion } from "@hooks";
 import { Menu } from "@components";
 import { IconLogo } from "@components/icons";
+import { navLinks } from "@config";
+import { usePrefersReducedMotion, useScrollDirection } from "@hooks";
+import { loaderDelay } from "@utils";
+import { Link } from "gatsby";
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import styled, { css } from "styled-components";
 
 const StyledHeader = styled.header`
   ${({ theme }) => theme.mixins.flexBetween};
@@ -202,7 +202,7 @@ const Nav = ({ isHome }) => {
                     </li>
                   ))}
               </ol>
-              <div>{ResumeLink}</div>
+              {/* <div>{ResumeLink}</div> */}
             </StyledLinks>
 
             <Menu />
@@ -241,7 +241,7 @@ const Nav = ({ isHome }) => {
                 </TransitionGroup>
               </ol>
 
-              <TransitionGroup component={null}>
+              {/* <TransitionGroup component={null}>
                 {isMounted && (
                   <CSSTransition classNames={fadeDownClass} timeout={timeout}>
                     <div
@@ -255,7 +255,7 @@ const Nav = ({ isHome }) => {
                     </div>
                   </CSSTransition>
                 )}
-              </TransitionGroup>
+              </TransitionGroup> */}
             </StyledLinks>
 
             <TransitionGroup component={null}>
