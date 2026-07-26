@@ -1,12 +1,12 @@
 ---
 date: '2015-11-01'
+order: 6
 title: 'Front End Engineer'
 company: 'RiVi Consulting'
 location: 'New York City, NY'
-range: 'November 2015 - October 2017'
+range: 'November 2015 - March 2018'
 url: 'https://www.rivigroup.com/'
 ---
 
-- Worked with designers and product management within an Agile environment to develop features using React for single page applications. 
--  Owned initiatives such as mobile-first responsive design and performance optimization.
-- Utilized and leveraged many of the integral tools in the React ecosystem – Redux, React-Router, Babel, Webpack, and Jest. 
+- Maintained websites for commercial clients.
+- Worked with designers and product managers in an Agile development environment.

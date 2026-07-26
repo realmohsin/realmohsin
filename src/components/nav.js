@@ -6,7 +6,7 @@ import styled, { css } from "styled-components";
 import { navLinks } from "@config";
 import { loaderDelay } from "@utils";
 import { useScrollDirection, usePrefersReducedMotion } from "@hooks";
-import { Menu } from "@components";
+import { Menu, ResumeDropdown } from "@components";
 import { IconLogo } from "@components/icons";
 
 const StyledHeader = styled.header`
@@ -120,11 +120,6 @@ const StyledLinks = styled.div`
     }
   }
 
-  .resume-button {
-    ${({ theme }) => theme.mixins.smallButton};
-    margin-left: 15px;
-    font-size: var(--fz-xs);
-  }
 `;
 
 const Nav = ({ isHome }) => {
@@ -172,16 +167,7 @@ const Nav = ({ isHome }) => {
     </div>
   );
 
-  const ResumeLink = (
-    <a
-      className="resume-button"
-      href="/2022-updated-resume.pdf"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Resume
-    </a>
-  );
+  const ResumeLink = <ResumeDropdown variant="small" />;
 
   return (
     <StyledHeader
@@ -202,7 +188,7 @@ const Nav = ({ isHome }) => {
                     </li>
                   ))}
               </ol>
-              <div>{ResumeLink}</div>
+              <div style={{ marginLeft: "15px" }}>{ResumeLink}</div>
             </StyledLinks>
 
             <Menu />
@@ -246,6 +232,7 @@ const Nav = ({ isHome }) => {
                   <CSSTransition classNames={fadeDownClass} timeout={timeout}>
                     <div
                       style={{
+                        marginLeft: "15px",
                         transitionDelay: `${
                           isHome ? navLinks.length * 100 : 0
                         }ms`,

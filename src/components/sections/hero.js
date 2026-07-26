@@ -28,7 +28,7 @@ const StyledHeroSection = styled.section`
     }
   }
 
-  h3 {
+  h3 {  
     margin-top: 10px;
     color: var(--slate);
     line-height: 0.9;
@@ -63,10 +63,10 @@ const Hero = () => {
   const three = <h3 className='big-heading'>I build things for the web.</h3>
   const four = (
     <p>
-      I'm a software engineer who specializes in building and designing
-      exceptional digital products - from websites to custom applications.
-      &nbsp;I help discerning businesses gain a competitive advantage from their
-      online presence.
+      I'm a senior software engineer who specializes in designing and building
+      exceptional digital products.
+      {/* &nbsp;I help discerning businesses gain a competitive advantage from their
+      online presence. */}
     </p>
   )
   const five = (

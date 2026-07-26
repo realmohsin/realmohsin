@@ -160,6 +160,7 @@ const StyledProject = styled.li`
     background-color: var(--light-navy);
     color: var(--light-slate);
     font-size: var(--fz-lg);
+    text-align: center;
 
     @media (max-width: 768px) {
       padding: 20px 0;
@@ -226,6 +227,31 @@ const StyledProject = styled.li`
       svg {
         width: 20px;
         height: 20px;
+      }
+    }
+
+    &.cta {
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+      margin-left: 0;
+
+      a {
+        ${({ theme }) => theme.mixins.smallButton};
+      }
+
+      a.github-button {
+        ${({ theme }) => theme.mixins.flexCenter};
+        padding: 0.6rem 0.7rem;
+        border: none;
+        color: var(--light-slate);
+
+        &:hover,
+        &:focus,
+        &:active {
+          background-color: transparent;
+          color: var(--green);
+        }
       }
     }
   }
@@ -299,6 +325,7 @@ const Featured = () => {
       featured: allMarkdownRemark(
         filter: { fileAbsolutePath: { regex: "/featured/" } }
         sort: { fields: [frontmatter___date], order: DESC }
+        limit: 2
       ) {
         edges {
           node {
@@ -316,6 +343,10 @@ const Featured = () => {
               tech
               github
               external
+              links {
+                name
+                url
+              }
             }
             html
           }
@@ -343,15 +374,20 @@ const Featured = () => {
   return (
     <section id='projects'>
       <h2 className='numbered-heading' ref={revealTitle}>
-        Some Websites I've Built
+        Live Demos of Past Work
       </h2>
 
       <StyledProjectsGrid>
         {featuredProjects &&
           featuredProjects.map(({ node }, i) => {
             const { frontmatter, html } = node
-            const { external, title, tech, github, cover } = frontmatter
+            const { external, title, tech, github, cover, links } = frontmatter
             const image = getImage(cover)
+            const ctaLinks = links || []
+            const primaryLink = ctaLinks.filter(link => link && link.url)[0]
+            const primaryUrl = primaryLink ? primaryLink.url : external
+            const imageUrl = primaryUrl || github
+            const newTab = { target: '_blank', rel: 'noopener noreferrer' }
 
             return (
               <StyledProject
@@ -363,13 +399,64 @@ const Featured = () => {
                     <p className='project-overline'>Featured Project</p>
 
                     <h3 className='project-title'>
-                      <a href={external}>{title}</a>
+                      <a
+                        href={primaryUrl || '#'}
+                        {...(primaryUrl ? newTab : {})}
+                      >
+                        {title}
+                      </a>
                     </h3>
 
                     <div
                       className='project-description'
                       dangerouslySetInnerHTML={{ __html: html }}
                     />
+
+                    {ctaLinks.length ? (
+                      <div className='project-links cta'>
+                        {ctaLinks.map((link, j) => (
+                          <a
+                            key={j}
+                            href={link.url || '#'}
+                            {...(link.url ? newTab : {})}
+                          >
+                            {link.name}
+                          </a>
+                        ))}
+                        {github && (
+                          <a
+                            href={github}
+                            aria-label='GitHub Link'
+                            className='github-button'
+                            {...newTab}
+                          >
+                            <Icon name='GitHub' />
+                          </a>
+                        )}
+                      </div>
+                    ) : (
+                      <div className='project-links'>
+                        {github && (
+                          <a
+                            href={github}
+                            aria-label='GitHub Link'
+                            {...newTab}
+                          >
+                            <Icon name='GitHub' />
+                          </a>
+                        )}
+                        {external && (
+                          <a
+                            href={external}
+                            aria-label='External Link'
+                            className='external'
+                            {...newTab}
+                          >
+                            <Icon name='External' />
+                          </a>
+                        )}
+                      </div>
+                    )}
 
                     {tech.length && (
                       <ul className='project-tech-list'>
@@ -378,28 +465,11 @@ const Featured = () => {
                         ))}
                       </ul>
                     )}
-
-                    <div className='project-links'>
-                      {github && (
-                        <a href={github} aria-label='GitHub Link'>
-                          <Icon name='GitHub' />
-                        </a>
-                      )}
-                      {external && (
-                        <a
-                          href={external}
-                          aria-label='External Link'
-                          className='external'
-                        >
-                          <Icon name='External' />
-                        </a>
-                      )}
-                    </div>
                   </div>
                 </div>
 
                 <div className='project-image'>
-                  <a href={external ? external : github ? github : '#'}>
+                  <a href={imageUrl || '#'} {...(imageUrl ? newTab : {})}>
                     <GatsbyImage image={image} alt={title} className='img' />
                   </a>
                 </div>

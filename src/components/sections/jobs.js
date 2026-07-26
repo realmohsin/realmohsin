@@ -33,36 +33,64 @@ const StyledTabList = styled.div`
   list-style: none;
 
   @media (max-width: 600px) {
+    display: none;
+  }
+`
+
+const StyledMobileTabNav = styled.div`
+  display: none;
+
+  @media (max-width: 600px) {
     display: flex;
-    overflow-x: auto;
-    width: calc(100% + 100px);
-    padding-left: 50px;
-    margin-left: -50px;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
     margin-bottom: 30px;
   }
-  @media (max-width: 480px) {
-    width: calc(100% + 50px);
-    padding-left: 25px;
-    margin-left: -25px;
+`
+
+const StyledNavButton = styled.button`
+  ${({ theme }) => theme.mixins.flexCenter};
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: var(--green);
+  cursor: pointer;
+
+  &:focus:not(:disabled) {
+    outline: none;
   }
 
-  li {
-    &:first-of-type {
-      @media (max-width: 600px) {
-        margin-left: 50px;
-      }
-      @media (max-width: 480px) {
-        margin-left: 25px;
-      }
-    }
-    &:last-of-type {
-      @media (max-width: 600px) {
-        padding-right: 50px;
-      }
-      @media (max-width: 480px) {
-        padding-right: 25px;
-      }
-    }
+  &:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+`
+
+const StyledMobileTabLabel = styled.div`
+  ${({ theme }) => theme.mixins.flexCenter};
+  flex: 1;
+  min-width: 0;
+  height: var(--tab-height);
+  padding: 0 8px 2px;
+  border-bottom: 2px solid var(--green);
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs);
+  text-align: center;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `
 
@@ -84,15 +112,6 @@ const StyledTabButton = styled.button`
   @media (max-width: 768px) {
     padding: 0 15px 2px;
   }
-  @media (max-width: 600px) {
-    ${({ theme }) => theme.mixins.flexCenter};
-    min-width: 120px;
-    padding: 0 15px;
-    border-left: 0;
-    border-bottom: 2px solid var(--lightest-navy);
-    text-align: center;
-  }
-
   &:hover,
   &:focus {
     background-color: var(--light-navy);
@@ -113,22 +132,37 @@ const StyledHighlight = styled.div`
   );
   transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
   transition-delay: 0.1s;
-
-  @media (max-width: 600px) {
-    top: auto;
-    bottom: 0;
-    width: 100%;
-    max-width: var(--tab-width);
-    height: 2px;
-    margin-left: 50px;
-    transform: translateX(
-      calc(${({ activeTabId }) => activeTabId} * var(--tab-width))
-    );
-  }
-  @media (max-width: 480px) {
-    margin-left: 25px;
-  }
 `
+
+const ChevronLeft = () => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='2'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+    aria-hidden='true'
+  >
+    <polyline points='15 18 9 12 15 6' />
+  </svg>
+)
+
+const ChevronRight = () => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='2'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+    aria-hidden='true'
+  >
+    <polyline points='9 18 15 12 9 6' />
+  </svg>
+)
 
 const StyledTabPanels = styled.div`
   position: relative;
@@ -173,11 +207,12 @@ const Jobs = () => {
     query {
       jobs: allMarkdownRemark(
         filter: { fileAbsolutePath: { regex: "/jobs/" } }
-        sort: { fields: [frontmatter___date], order: DESC }
+        sort: { fields: [frontmatter___order], order: ASC }
       ) {
         edges {
           node {
             frontmatter {
+              order
               title
               company
               location
@@ -225,7 +260,18 @@ const Jobs = () => {
   // Only re-run the effect if tabFocus changes
   useEffect(() => focusTab(), [tabFocus])
 
-  // Focus on tabs when using up & down arrow keys
+  const getCompanyName = company =>
+    company === 'realmohsin.com' ? 'Freelance' : company
+
+  const goToPrevTab = () => setActiveTabId(id => Math.max(0, id - 1))
+  const goToNextTab = () =>
+    setActiveTabId(id => Math.min(jobsData.length - 1, id + 1))
+
+  const activeCompany = jobsData[activeTabId]
+    ? getCompanyName(jobsData[activeTabId].node.frontmatter.company)
+    : ''
+
+  // Focus on tabs when using arrow keys
   const onKeyDown = e => {
     switch (e.key) {
       case KEY_CODES.ARROW_UP: {
@@ -237,6 +283,18 @@ const Jobs = () => {
       case KEY_CODES.ARROW_DOWN: {
         e.preventDefault()
         setTabFocus(tabFocus + 1)
+        break
+      }
+
+      case KEY_CODES.ARROW_LEFT: {
+        e.preventDefault()
+        goToPrevTab()
+        break
+      }
+
+      case KEY_CODES.ARROW_RIGHT: {
+        e.preventDefault()
+        goToNextTab()
         break
       }
 
@@ -271,14 +329,44 @@ const Jobs = () => {
                   aria-selected={activeTabId === i ? true : false}
                   aria-controls={`panel-${i}`}
                 >
-                  <span>
-                    {company === 'realmohsin.com' ? 'Freelance' : company}
-                  </span>
+                  <span>{getCompanyName(company)}</span>
                 </StyledTabButton>
               )
             })}
           <StyledHighlight activeTabId={activeTabId} />
         </StyledTabList>
+
+        <StyledMobileTabNav
+          role='tablist'
+          aria-label='Job tabs'
+          onKeyDown={e => onKeyDown(e)}
+        >
+          <StyledNavButton
+            type='button'
+            onClick={goToPrevTab}
+            disabled={activeTabId === 0}
+            aria-label='Previous employer'
+          >
+            <ChevronLeft />
+          </StyledNavButton>
+
+          <StyledMobileTabLabel
+            role='tab'
+            aria-selected='true'
+            aria-controls={`panel-${activeTabId}`}
+          >
+            <span>{activeCompany}</span>
+          </StyledMobileTabLabel>
+
+          <StyledNavButton
+            type='button'
+            onClick={goToNextTab}
+            disabled={activeTabId === jobsData.length - 1}
+            aria-label='Next employer'
+          >
+            <ChevronRight />
+          </StyledNavButton>
+        </StyledMobileTabNav>
 
         <StyledTabPanels>
           {jobsData &&

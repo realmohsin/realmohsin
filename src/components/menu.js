@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { navLinks } from "@config";
 import { KEY_CODES } from "@utils";
 import { useOnClickOutside } from "@hooks";
+import ResumeDropdown from "./resumeDropdown";
 
 const StyledMenu = styled.div`
   display: none;
@@ -150,8 +151,6 @@ const StyledSidebar = styled.aside`
   }
 
   .resume-link {
-    ${({ theme }) => theme.mixins.bigButton};
-    padding: 18px 50px;
     margin: 10% auto 0;
     width: max-content;
   }
@@ -172,7 +171,7 @@ const Menu = () => {
   const setFocusables = () => {
     menuFocusables = [
       buttonRef.current,
-      ...Array.from(navRef.current.querySelectorAll("a")),
+      ...Array.from(navRef.current.querySelectorAll("a, button")),
     ];
     firstFocusableEl = menuFocusables[0];
     lastFocusableEl = menuFocusables[menuFocusables.length - 1];
@@ -276,9 +275,12 @@ const Menu = () => {
               </ol>
             )}
 
-            <a href="/2022-updated-resume.pdf" className="resume-link">
-              Resume
-            </a>
+            <div className="resume-link">
+              <ResumeDropdown
+                variant="big"
+                onSelect={() => setMenuOpen(false)}
+              />
+            </div>
           </nav>
         </StyledSidebar>
       </div>

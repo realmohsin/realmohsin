@@ -1,15 +1,20 @@
 ---
 date: '3'
-title: 'Interior Design Company'
-cover: './schimerli-1280.png'
-github: 'https://github.com/realmohsin/featured-website-1'
-external: 'https://realmohsin-demo-2.xyz/'
+title: 'AI Customer Support Widget'
+cover: './ai-customer-support-widget.png'
 tech:
-  - Gatsby.js
-  - Firebase
-  - GSAP
+  - TypeScript
+  - Next.js
+  - Convex
+  - VAPI
+  - OpenAI
+github: 'https://github.com/realmohsin/ai-customer-support-widget'
+links:
+  - name: 'Demo of Widget'
+    url: 'https://sonar.realmohsin-live-demos.com/'
+  - name: 'Dashboard Demo'
+    url: 'https://sonar-web.realmohsin-live-demos.com/'
 showInProjects: true
 ---
 
-A highly visual website for an interior design company that begins with an elegant animation. The technologies chosen were based on the resource-heavy requirements of the project.
-
+An embeddable AI customer support widget with an admin dashboard for managing conversations, and widget settings. It supports custom knowledge resources for agents, along with optional voice communication.

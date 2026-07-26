@@ -1,16 +1,17 @@
 ---
 date: '2'
-title: 'Elite Law Firm'
-cover: './romano-law-size.jpg'
-github: 'https://github.com/realmohsin/featured-website-2'
-external: 'https://realmohsin-demo-1.xyz/'
+title: 'Video Course Platform'
+cover: './video-course-platform.png'
 tech:
   - React
-  - Node.js
-  - Contentful CMS
-  - JAMStack
+  - Next.js
+  - TypeScript
+  - Stripe
+github: 'https://github.com/realmohsin/video-course-platform'
+links:
+  - name: 'Live Demo'
+    url: 'https://vcp.realmohsin-live-demos.com/'
 showInProjects: true
 ---
 
-The main front facing online presence of an elite law firm. The design of the website features an innovative navigation system. The backend is serverless - a new architecture that enables extremely fast page loading speed.
-
+A learning management platform where the instructor role can create and sell video courses while the student role can purchase courses, watch lessons, and track their progress. (This is a generic version of a client request made as a demo.)

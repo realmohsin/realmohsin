@@ -8,19 +8,11 @@ module.exports = {
     },
     {
       name: 'Linkedin',
-      url: 'https://www.linkedin.com/in/'
-    },
-    {
-      name: 'Twitter',
-      url: 'https://twitter.com/1realmohsin'
+      url: 'https://www.linkedin.com/in/real-mohsin/'
     },
     {
       name: 'Instagram',
       url: 'https://www.instagram.com/1realmohsin/?hl=en'
-    },
-    {
-      name: 'Codepen',
-      url: 'https://codepen.io/'
     }
   ],
 

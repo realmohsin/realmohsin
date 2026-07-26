@@ -1,8 +1,8 @@
 ---
-date: '2019-09-12'
-title: 'CryptoPrice'
-github: 'https://github.com/realmohsin/crypto-dashboard'
-external: 'https://github.com/realmohsin/crypto-dashboard'
+date: '2018-09-12'
+title: 'CryptoCurrency Tracking'
+github: 'https://github.com/realmohsin/cryptocurrency-price-visualizations'
+external: 'https://github.com/realmohsin/cryptocurrency-price-visualizations'
 tech:
   - HighCharts
   - Express
@@ -11,4 +11,4 @@ tech:
 showInProjects: true
 ---
 
-Data visualization for comparing cryptocurrency prices. Features include visualization of data in a graphical format, filtering through thousands of coins, and an intuitive user interface. 
+Data visualization for cryptocurrency prices. Highcharts used for visualization and data from CrypoCompare API. (Old hobby project)

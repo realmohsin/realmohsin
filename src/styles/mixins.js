@@ -122,6 +122,11 @@ const mixins = {
     text-decoration: none;
     cursor: pointer;
     transition: var(--transition);
+
+    @media (max-width: 480px) {
+      padding: 0.875rem 1.25rem;
+    }
+
     &:hover,
     &:focus,
     &:active {

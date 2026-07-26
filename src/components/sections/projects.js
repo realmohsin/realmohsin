@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import styled from 'styled-components'
@@ -12,10 +12,6 @@ const StyledProjectsSection = styled.section`
   flex-direction: column;
   align-items: center;
 
-  h2 {
-    font-size: clamp(24px, 5vw, var(--fz-heading));
-  }
-
   .archive-link {
     font-family: var(--font-mono);
     font-size: var(--fz-sm);
@@ -27,19 +23,17 @@ const StyledProjectsSection = styled.section`
   .projects-grid {
     ${({ theme }) => theme.mixins.resetList};
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 15px;
     position: relative;
-    margin-top: 50px;
 
-    @media (max-width: 1080px) {
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    @media (max-width: 900px) {
+      grid-template-columns: repeat(2, 1fr);
     }
-  }
 
-  .more-button {
-    ${({ theme }) => theme.mixins.button};
-    margin: 80px auto 0;
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
   }
 `
 
@@ -69,6 +63,7 @@ const StyledProject = styled.li`
     align-items: flex-start;
     position: relative;
     height: 100%;
+    min-height: 320px;
     padding: 2rem 1.75rem;
     border-radius: var(--border-radius);
     background-color: var(--light-navy);
@@ -96,14 +91,6 @@ const StyledProject = styled.li`
       a {
         ${({ theme }) => theme.mixins.flexCenter};
         padding: 5px 7px;
-
-        &.external {
-          svg {
-            width: 22px;
-            height: 22px;
-            margin-top: -4px;
-          }
-        }
 
         svg {
           width: 20px;
@@ -189,7 +176,6 @@ const Projects = () => {
     }
   `)
 
-  const [showMore, setShowMore] = useState(false)
   const revealTitle = useRef(null)
   const revealArchiveLink = useRef(null)
   const revealProjects = useRef([])
@@ -207,10 +193,7 @@ const Projects = () => {
     )
   }, [])
 
-  const GRID_LIMIT = 6
   const projects = data.projects.edges.filter(({ node }) => node)
-  const firstSix = projects.slice(0, GRID_LIMIT)
-  const projectsToShow = showMore ? projects : firstSix
 
   const projectInner = node => {
     const { frontmatter, html } = node
@@ -229,20 +212,11 @@ const Projects = () => {
                   <Icon name='GitHub' />
                 </a>
               )}
-              {external && (
-                <a
-                  href={external}
-                  aria-label='External Link'
-                  className='external'
-                >
-                  <Icon name='External' />
-                </a>
-              )}
             </div>
           </div>
 
           <h3 className='project-title'>
-            <a href={external}>{title}</a>
+            <a href={github || external}>{title}</a>
           </h3>
 
           <div
@@ -266,7 +240,9 @@ const Projects = () => {
 
   return (
     <StyledProjectsSection>
-      <h2 ref={revealTitle}>Some Technical Projects</h2>
+      <h2 className='numbered-heading' ref={revealTitle}>
+        Some More Past Work
+      </h2>
 
       {/* <Link
         className='inline-link archive-link'
@@ -279,29 +255,24 @@ const Projects = () => {
       <ul className='projects-grid'>
         {prefersReducedMotion ? (
           <>
-            {projectsToShow &&
-              projectsToShow.map(({ node }, i) => (
+            {projects &&
+              projects.map(({ node }, i) => (
                 <StyledProject key={i}>{projectInner(node)}</StyledProject>
               ))}
           </>
         ) : (
           <TransitionGroup component={null}>
-            {projectsToShow &&
-              projectsToShow.map(({ node }, i) => (
+            {projects &&
+              projects.map(({ node }, i) => (
                 <CSSTransition
                   key={i}
                   classNames='fadeup'
-                  timeout={i >= GRID_LIMIT ? (i - GRID_LIMIT) * 300 : 300}
+                  timeout={300}
                   exit={false}
                 >
                   <StyledProject
                     key={i}
                     ref={el => (revealProjects.current[i] = el)}
-                    style={{
-                      transitionDelay: `${
-                        i >= GRID_LIMIT ? (i - GRID_LIMIT) * 100 : 0
-                      }ms`
-                    }}
                   >
                     {projectInner(node)}
                   </StyledProject>
@@ -310,10 +281,6 @@ const Projects = () => {
           </TransitionGroup>
         )}
       </ul>
-
-      <button className='more-button' onClick={() => setShowMore(!showMore)}>
-        Show {showMore ? 'Less' : 'More'}
-      </button>
     </StyledProjectsSection>
   )
 }

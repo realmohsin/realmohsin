@@ -1,187 +1,202 @@
-import React, { useEffect, useRef } from 'react'
-import { StaticImage } from 'gatsby-plugin-image'
-import styled from 'styled-components'
-import { srConfig } from '@config'
-import sr from '@utils/sr'
-import { usePrefersReducedMotion } from '@hooks'
+import React, { useEffect, useRef } from "react";
+import { StaticImage } from "gatsby-plugin-image";
+import styled from "styled-components";
+import { srConfig } from "@config";
+import sr from "@utils/sr";
+import { usePrefersReducedMotion } from "@hooks";
 
 const StyledAboutSection = styled.section`
-  max-width: 900px;
-
-  .inner {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    grid-gap: 50px;
+    max-width: 900px;
 
     @media (max-width: 768px) {
-      display: block;
+        margin-bottom: 32px;
     }
-  }
-`
+
+    .inner {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        grid-gap: 50px;
+
+        @media (max-width: 768px) {
+            display: block;
+        }
+    }
+`;
 const StyledText = styled.div`
-  ul.skills-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(140px, 200px));
-    padding: 0;
-    margin: 20px 0 0 0;
-    overflow: hidden;
-    list-style: none;
+    ul.skills-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(140px, 200px));
+        padding: 0;
+        margin: 20px 0 0 0;
+        overflow: hidden;
+        list-style: none;
 
-    li {
-      position: relative;
-      margin-bottom: 10px;
-      padding-left: 20px;
-      font-family: var(--font-mono);
-      font-size: var(--fz-xs);
+        li {
+            position: relative;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            font-family: var(--font-mono);
+            font-size: var(--fz-xs);
 
-      &:before {
-        content: '▹';
-        position: absolute;
-        left: 0;
-        color: var(--green);
-        font-size: var(--fz-sm);
-        line-height: 12px;
-      }
+            &:before {
+                content: "▹";
+                position: absolute;
+                left: 0;
+                color: var(--green);
+                font-size: var(--fz-sm);
+                line-height: 12px;
+            }
+        }
     }
-  }
-`
+`;
 const StyledPic = styled.div`
-  position: relative;
-  max-width: 300px;
-
-  @media (max-width: 768px) {
-    margin: 50px auto 0;
-    width: 70%;
-  }
-
-  .wrapper {
-    ${({ theme }) => theme.mixins.boxShadow};
-    display: block;
     position: relative;
-    width: 100%;
-    border-radius: var(--border-radius);
-    background-color: var(--green);
+    max-width: 300px;
 
-    &:hover,
-    &:focus {
-      background: transparent;
-      outline: 0;
-
-      &:after {
-        top: 15px;
-        left: 15px;
-      }
-
-      .img {
-        filter: none;
-        mix-blend-mode: normal;
-      }
+    @media (max-width: 768px) {
+        margin: 50px auto 0;
+        width: 70%;
     }
 
-    .img {
-      position: relative;
-      border-radius: var(--border-radius);
-      mix-blend-mode: multiply;
-      filter: grayscale(100%) contrast(1);
-      transition: var(--transition);
-    }
+    .wrapper {
+        ${({ theme }) => theme.mixins.boxShadow};
+        display: block;
+        position: relative;
+        width: 100%;
+        border-radius: var(--border-radius);
+        background-color: var(--green);
 
-    &:before,
-    &:after {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: var(--border-radius);
-      transition: var(--transition);
-    }
+        &:hover,
+        &:focus {
+            background: transparent;
+            outline: 0;
 
-    &:before {
-      top: 0;
-      left: 0;
-      background-color: var(--navy);
-      mix-blend-mode: screen;
-    }
+            &:after {
+                top: 15px;
+                left: 15px;
+            }
 
-    &:after {
-      border: 2px solid var(--green);
-      top: 20px;
-      left: 20px;
-      z-index: -1;
+            .img {
+                filter: none;
+                mix-blend-mode: normal;
+            }
+        }
+
+        .img {
+            position: relative;
+            border-radius: var(--border-radius);
+            mix-blend-mode: multiply;
+            filter: grayscale(100%) contrast(1);
+            transition: var(--transition);
+        }
+
+        &:before,
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        &:before {
+            top: 0;
+            left: 0;
+            background-color: var(--navy);
+            mix-blend-mode: screen;
+        }
+
+        &:after {
+            border: 2px solid var(--green);
+            top: 20px;
+            left: 20px;
+            z-index: -1;
+        }
     }
-  }
-`
+`;
 
 const About = () => {
-  const revealContainer = useRef(null)
-  const prefersReducedMotion = usePrefersReducedMotion()
+    const revealContainer = useRef(null);
+    const prefersReducedMotion = usePrefersReducedMotion();
 
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      return
-    }
+    useEffect(() => {
+        if (prefersReducedMotion) {
+            return;
+        }
 
-    sr.reveal(revealContainer.current, srConfig())
-  }, [])
+        sr.reveal(revealContainer.current, srConfig());
+    }, []);
 
-  const skills = [
-    'JavaScript',
-    'React',
-    'Node.js',
-    'JAMStack',
-    'Vue',
-    'WordPress'
-  ]
+    const skills = [
+        "TypeScript",
+        "Docker",
+        "React.js",
+        "Next.js",
+        "PostgreSQL",
+        "Amazon Web Services",
+        "GitHub Actions",
+        "Node.js",
+    ];
 
-  return (
-    <StyledAboutSection id='about' ref={revealContainer}>
-      <h2 className='numbered-heading'>About Me</h2>
+    return (
+        <StyledAboutSection id="about" ref={revealContainer}>
+            <h2 className="numbered-heading">About Me</h2>
 
-      <div className='inner'>
-        <StyledText>
-          <div>
-            <p>
-              Hello! &nbsp;My name is Real and I am a software engineer based in
-              New York City. &nbsp;My focus is in the fast paced field of web
-              development.
-            </p>
+            <div className="inner">
+                <StyledText>
+                    <div>
+                        <p>
+                            I’ve been building software for startups and
+                            enterprise organizations for the past 10 years.
+                        </p>
 
-            <p>
-              In a world where websites are now ranked by search engines based
-              on their speed, and where applications are judged by their performance,
-              I put a premium on making sure my software products are highly
-              optimized. &nbsp;And I expect my clients to know exactly what they
-              are getting, so past work is not only alluded to, but also
-              available for viewing and testing as demos.
-            </p>
+                        <p>
+                            As a TypeScript enthusiast and early adopter, I'm
+                            glad to see its value appreciated in modern web
+                            development and am excited by its widespread
+                            adoption.
+                        </p>
 
-            <p>
-              When it comes to the specific technologies involved, here is a
-              sample of what I've been working with lately:
-            </p>
-          </div>
+                        <p>
+                            In the AI era, performance and security have become
+                            more important than ever — which aligns closely with
+                            the principles I’ve always prioritized as an
+                            engineer. I look forward to the increased focus on
+                            Core Web Vitals and increased security standards.
+                        </p>
 
-          <ul className='skills-list'>
-            {skills && skills.map((skill, i) => <li key={i}>{skill}</li>)}
-          </ul>
-        </StyledText>
+                        <p>
+                            As a senior engineer, I've contributed to many
+                            industries from cybersecurity to satellite imagery
+                            and am proud that my code is powering applications
+                            throughout the web. Here are some of the
+                            technologies I've worked with in my career:
+                        </p>
+                    </div>
 
-        <StyledPic>
-          <div className='wrapper'>
-            <StaticImage
-              className='img'
-              src='../../images/me.jpg'
-              width={500}
-              quality={95}
-              formats={['AUTO', 'WEBP', 'AVIF']}
-              alt='Headshot'
-            />
-          </div>
-        </StyledPic>
-      </div>
-    </StyledAboutSection>
-  )
-}
+                    <ul className="skills-list">
+                        {skills &&
+                            skills.map((skill, i) => <li key={i}>{skill}</li>)}
+                    </ul>
+                </StyledText>
 
-export default About
+                <StyledPic>
+                    <div className="wrapper">
+                        <StaticImage
+                            className="img"
+                            src="../../images/me.jpg"
+                            width={500}
+                            quality={95}
+                            formats={["AUTO", "WEBP", "AVIF"]}
+                            alt="Headshot"
+                        />
+                    </div>
+                </StyledPic>
+            </div>
+        </StyledAboutSection>
+    );
+};
+
+export default About;
