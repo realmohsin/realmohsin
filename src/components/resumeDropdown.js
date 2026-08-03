@@ -99,7 +99,7 @@ const ResumeDropdown = ({ variant, onSelect }) => {
         <ul className='resume-options'>
           <li>
             <a
-              href='/resume-2026.pdf'
+              href='/realmohsin-resume-2026.pdf'
               target='_blank'
               rel='noopener noreferrer'
               onClick={handleSelect}
@@ -109,8 +109,8 @@ const ResumeDropdown = ({ variant, onSelect }) => {
           </li>
           <li>
             <a
-              href='/resume-2026.docx'
-              download='Real-Mohsin-Resume.docx'
+              href='/realmohsin-resume-2026.docx'
+              download='realmohsin-resume-2026.docx'
               onClick={handleSelect}
             >
               Download Word (.docx)
