@@ -9,5 +9,5 @@ url: 'https://uptycs.com/'
 ---
 
 - Full-time position at Series B Funded cybersecurity startup.
-- Architected frontend cybersecurity systems used for incident detection at PayPal, Comcast, Wix and other large enterprise customers.
+-  Architected frontend applications for cybersecurity incident detection used by PayPal, Comcast, Wix, and other large enterprise customers.
 - Served as technical lead in the implementation of a client-side data caching library.
