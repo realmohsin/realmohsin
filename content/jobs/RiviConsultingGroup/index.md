@@ -1,7 +1,7 @@
 ---
 date: '2015-11-01'
 order: 6
-title: 'Front End Engineer'
+title: 'Frontend Engineer'
 company: 'RiVi Consulting'
 location: 'New York City, NY'
 range: 'November 2015 - March 2018'
